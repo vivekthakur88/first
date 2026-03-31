@@ -1,8 +1,7 @@
-import React from 'react';
 import { useCalendarStore } from '../../store/useCalendarStore';
 
 export const CalendarComponent = () => {
-  const { view, openEventModal } = useCalendarStore();
+  const { openEventModal } = useCalendarStore();
 
   return (
     <>

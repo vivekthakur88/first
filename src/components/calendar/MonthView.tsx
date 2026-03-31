@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCalendarStore } from '../../store/useCalendarStore';
 import {
   startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, format,
@@ -32,7 +31,7 @@ export const MonthView = () => {
         ))}
       </div>
       <div className="grid grid-cols-7 flex-1 min-h-0 bg-secondary/20">
-        {days.map((day, i) => {
+        {days.map((day, _i) => {
           const isCurrentMonth = isSameMonth(day, monthStart);
           const isCurrentDay = isToday(day);
           

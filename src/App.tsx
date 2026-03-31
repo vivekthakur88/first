@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppLayout } from './components/layout/AppLayout';
 import { CalendarComponent } from './components/calendar/CalendarComponent';
 import { useCalendarStore } from './store/useCalendarStore';

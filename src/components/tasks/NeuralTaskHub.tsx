@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const NeuralTaskHub = () => {
   return (
     <div className="w-full h-full relative z-10 animate-in fade-in duration-500 pb-16">

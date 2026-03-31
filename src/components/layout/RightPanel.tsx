@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const RightPanel = () => {
   return (
     <aside className="hidden xl:flex fixed right-0 top-20 bottom-0 w-80 bg-[#131315] border-l border-[#D0BCFF]/5 p-8 flex-col gap-8 shadow-[-20px_0_80px_rgba(0,0,0,0.5)] z-40">

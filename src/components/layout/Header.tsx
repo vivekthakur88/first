@@ -1,6 +1,4 @@
-import React from 'react';
 import { useCalendarStore } from '../../store/useCalendarStore';
-import { format, parseISO } from 'date-fns';
 
 export const Header = () => {
   const { searchQuery, setSearchQuery, view, setView } = useCalendarStore();

@@ -67,7 +67,7 @@ const mockEvents: CalendarEvent[] = [
 
 export const useCalendarStore = create<CalendarState>()(
   persist(
-    (set, get) => ({
+    (set, _get) => ({
       currentDate: new Date().toISOString(),
       view: 'focus', // Made Neural Task Hub the default view
       events: mockEvents,

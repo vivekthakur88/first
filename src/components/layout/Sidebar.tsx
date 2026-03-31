@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCalendarStore } from '../../store/useCalendarStore';
 
 export const Sidebar = () => {
