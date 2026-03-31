@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TimeFlow | Temporal Architect Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#201f22",
+              "on-primary-fixed-variant": "#4d3d76",
+              "surface-container-high": "#2a2a2c",
+              "tertiary-container": "#ffaaf3",
+              "on-primary-container": "#594983",
+              "background": "#131315",
+              "tertiary-fixed-dim": "#ffabf3",
+              "primary-container": "#d0bcff",
+              "on-surface-variant": "#cac4d0",
+              "on-tertiary-fixed": "#380038",
+              "on-secondary-fixed-variant": "#004f58",
+              "on-primary-fixed": "#210f48",
+              "surface-container-lowest": "#0e0e10",
+              "on-tertiary-fixed-variant": "#810081",
+              "inverse-surface": "#e5e1e4",
+              "surface-variant": "#353437",
+              "tertiary": "#ffd6f5",
+              "primary": "#e9ddff",
+              "on-secondary-fixed": "#001f24",
+              "on-secondary": "#00363d",
+              "on-secondary-container": "#00616d",
+              "on-surface": "#e5e1e4",
+              "surface": "#131315",
+              "secondary": "#bef4ff",
+              "on-primary": "#37265e",
+              "outline-variant": "#49454f",
+              "surface-container-low": "#1c1b1d",
+              "on-error-container": "#ffdad6",
+              "primary-fixed-dim": "#d0bcff",
+              "secondary-fixed-dim": "#00daf3",
+              "error-container": "#93000a",
+              "secondary-fixed": "#9cefff",
+              "surface-tint": "#d0bcff",
+              "secondary-container": "#01e3fd",
+              "tertiary-fixed": "#ffd7f5",
+              "on-background": "#e5e1e4",
+              "surface-container-highest": "#353437",
+              "on-tertiary": "#5b005b",
+              "primary-fixed": "#e9ddff",
+              "on-tertiary-container": "#940094",
+              "outline": "#948f9a",
+              "inverse-primary": "#665590",
+              "surface-dim": "#131315",
+              "inverse-on-surface": "#313032",
+              "surface-bright": "#39393b",
+              "error": "#ffb4ab",
+              "on-error": "#690005"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grain-texture {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+        }
+        .aether-aura {
+            box-shadow: 0 0 40px 10px rgba(208, 188, 255, 0.15);
+        }
+        .temporal-bridge {
+            background: linear-gradient(90deg, transparent 0%, #D0BCFF 50%, transparent 100%);
+            height: 2px;
+            filter: blur(1px);
+        }
+        .mesh-gradient-bg {
+            background: radial-gradient(at 0% 0%, rgba(208, 188, 255, 0.05) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(0, 227, 253, 0.05) 0px, transparent 50%),
+                        radial-gradient(at 50% 50%, rgba(255, 171, 243, 0.02) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen overflow-hidden">
+<!-- Grain Overlay -->
+<div class="fixed inset-0 grain-texture z-[100]"></div>
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-[#131315]/40 backdrop-blur-3xl shadow-[0_0_60px_-15px_rgba(208,188,255,0.05)] h-20 flex justify-between items-center px-8 border-b border-[#D0BCFF]/5">
+<div class="flex items-center gap-8">
+<span class="font-headline font-bold text-[#D0BCFF] text-xl tracking-tight">TimeFlow</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#D0BCFF] border-b border-[#D0BCFF] pb-1 shadow-[0_4px_12px_-2px_rgba(208,188,255,0.3)] font-headline transition-all" href="#">Day</a>
+<a class="text-white/60 font-headline hover:text-[#00E3FD] transition-all" href="#">Week</a>
+<a class="text-white/60 font-headline hover:text-[#00E3FD] transition-all" href="#">Month</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<input class="bg-white/5 border-none focus:ring-1 focus:ring-primary-container rounded-full px-4 py-2 text-sm w-64 transition-all" placeholder="Search timeline..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-white/40 group-hover:text-primary">search</span>
+</div>
+<span class="material-symbols-outlined text-[#D0BCFF] hover:scale-110 active:scale-95 transition-transform cursor-pointer">settings_input_antenna</span>
+<div class="w-10 h-10 rounded-full border border-primary-container/30 overflow-hidden shadow-[0_0_15px_rgba(208,188,255,0.2)]">
+<img alt="Aether AI Orb" class="w-full h-full object-cover" data-alt="A glowing crystalline AI orb with swirling purple and cyan nebulae inside, sharp focus, cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt5ROHm5MXL8foJmzcYW-7xQ1oHMXgQJBGx1wgAWS9aXASi-5YkPro1HCx1A_lsUcYEeUrnhjKmmOPDsVj5pg_w5Q3VIJgphVZt1tVVUXr9P7dMR4qHX6vWYLzBU9wB8pSFBnBVGVRFbxa50rXVz1mYwjhsgXCSOzlHnWevVZiMYzmeqNHIkf4-g5KurjZvuK9aHn-NyyFZ8uKt7mEP97cHRmGqYcfb5Vo660rl2hq36iVwlBqlO_tt6xGcUJs8al50orNiDxpX1Y"/>
+</div>
+</div>
+</header>
+<div class="flex pt-20 h-screen overflow-hidden">
+<!-- Left Side Navigation -->
+<aside class="fixed left-0 h-full w-20 hover:w-64 bg-[#131315] border-r border-[#D0BCFF]/5 z-40 flex flex-col py-8 transition-all duration-500 ease-[spring(300,20)] group/sidebar shadow-[20px_0_80px_rgba(0,0,0,0.5)]">
+<div class="px-6 mb-12 flex items-center gap-4 overflow-hidden">
+<div class="min-w-[32px] h-8 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed text-lg">timeline</span>
+</div>
+<div class="opacity-0 group-hover/sidebar:opacity-100 transition-opacity whitespace-nowrap">
+<p class="font-headline font-black text-[#D0BCFF]">Temporal Architect</p>
+<p class="text-[10px] text-white/40 tracking-widest uppercase">Active State</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2 px-3">
+<div class="bg-[#D0BCFF]/10 text-[#D0BCFF] rounded-lg shadow-[0_0_15px_rgba(208,188,255,0.2)] flex items-center p-3 gap-4 cursor-pointer">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-headline text-sm opacity-0 group-hover/sidebar:opacity-100 transition-opacity whitespace-nowrap">Calendar</span>
+</div>
+<div class="text-white/40 hover:text-white/80 hover:bg-white/5 rounded-lg flex items-center p-3 gap-4 cursor-pointer transition-all">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-headline text-sm opacity-0 group-hover/sidebar:opacity-100 transition-opacity whitespace-nowrap">Tasks</span>
+</div>
+<div class="text-white/40 hover:text-white/80 hover:bg-white/5 rounded-lg flex items-center p-3 gap-4 cursor-pointer transition-all">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-headline text-sm opacity-0 group-hover/sidebar:opacity-100 transition-opacity whitespace-nowrap">Analytics</span>
+</div>
+<div class="text-white/40 hover:text-white/80 hover:bg-white/5 rounded-lg flex items-center p-3 gap-4 cursor-pointer transition-all">
+<span class="material-symbols-outlined">center_focus_strong</span>
+<span class="font-headline text-sm opacity-0 group-hover/sidebar:opacity-100 transition-opacity whitespace-nowrap">Focus</span>
+</div>
+<div class="text-white/40 hover:text-white/80 hover:bg-white/5 rounded-lg flex items-center p-3 gap-4 cursor-pointer transition-all">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-headline text-sm opacity-0 group-hover/sidebar:opacity-100 transition-opacity whitespace-nowrap">Settings</span>
+</div>
+</nav>
+<div class="px-3 mt-auto space-y-4">
+<button class="w-full bg-primary-container text-on-primary-fixed-variant p-3 rounded-lg flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(208,188,255,0.4)] transition-all overflow-hidden">
+<span class="material-symbols-outlined">add</span>
+<span class="font-headline font-bold text-xs opacity-0 group-hover/sidebar:opacity-100 transition-opacity whitespace-nowrap">New Event</span>
+</button>
+<div class="text-white/40 hover:text-white/80 flex items-center p-3 gap-4 cursor-pointer">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-headline text-sm opacity-0 group-hover/sidebar:opacity-100 transition-opacity whitespace-nowrap">Support</span>
+</div>
+</div>
+</aside>
+<!-- Main Calendar Area -->
+<main class="flex-1 ml-20 mr-80 mesh-gradient-bg relative overflow-y-auto p-8 custom-scrollbar">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<h1 class="font-headline text-4xl font-bold tracking-tight text-white mb-2">Cycle 04: <span class="text-primary-container">Ascension</span></h1>
+<p class="font-mono text-xs text-white/40">LATENCY: 14MS // TEMPORAL_DRIFT: 0.003s</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-low border border-white/5 rounded-lg p-3 flex flex-col items-center min-w-[80px]">
+<span class="text-[10px] text-white/40 font-mono">ENERGY</span>
+<span class="text-secondary font-mono font-bold">98.4%</span>
+</div>
+<div class="bg-surface-container-low border border-white/5 rounded-lg p-3 flex flex-col items-center min-w-[80px]">
+<span class="text-[10px] text-white/40 font-mono">FOCUS</span>
+<span class="text-tertiary-fixed-dim font-mono font-bold">04:12:00</span>
+</div>
+</div>
+</div>
+<!-- 7-Day Grid -->
+<div class="grid grid-cols-7 gap-4 h-[calc(100vh-280px)]">
+<!-- Day Columns -->
+<!-- Mon (Past) -->
+<div class="relative group/col">
+<div class="absolute inset-0 bg-surface-container-low/30 rounded-xl -z-10 transition-colors group-hover/col:bg-surface-container-low/50"></div>
+<div class="p-4 border-b border-white/5 text-center">
+<span class="block text-[10px] font-mono text-white/20">MON</span>
+<span class="text-lg font-headline text-white/40">12</span>
+</div>
+</div>
+<!-- Tue (Active) -->
+<div class="relative group/col aether-aura ring-1 ring-primary-container/20 rounded-xl overflow-hidden bg-primary-container/5">
+<div class="p-4 border-b border-white/10 text-center bg-primary-container/10">
+<span class="block text-[10px] font-mono text-primary-container">TUE</span>
+<span class="text-lg font-headline text-white font-bold">13</span>
+</div>
+<!-- Events Area -->
+<div class="p-3 relative h-full">
+<!-- Floating Glass Event 1 -->
+<div class="bg-white/5 backdrop-blur-xl border-l-2 border-primary-container p-3 rounded-lg shadow-2xl mb-4 hover:scale-105 transition-transform cursor-pointer relative group/event overflow-hidden">
+<div class="absolute -right-4 -top-4 w-12 h-12 bg-primary-container/10 blur-xl"></div>
+<span class="text-[9px] font-mono text-primary-container mb-1 block">09:00 - 10:30</span>
+<h4 class="text-xs font-bold text-white">Synaptic Sync</h4>
+<p class="text-[10px] text-white/50 mt-1">Deep Architecture Review</p>
+</div>
+<!-- Floating Glass Event 2 -->
+<div class="bg-white/5 backdrop-blur-xl border-l-2 border-secondary-container p-3 rounded-lg shadow-2xl hover:scale-105 transition-transform cursor-pointer relative group/event">
+<span class="text-[9px] font-mono text-secondary-container mb-1 block">14:00 - 15:00</span>
+<h4 class="text-xs font-bold text-white">Neural Flow</h4>
+<div class="flex mt-2 -space-x-2">
+<div class="w-5 h-5 rounded-full border border-background bg-surface-container"></div>
+<div class="w-5 h-5 rounded-full border border-background bg-surface-container"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Wed -->
+<div class="relative group/col">
+<div class="absolute inset-0 bg-surface-container-low/30 rounded-xl -z-10"></div>
+<div class="p-4 border-b border-white/5 text-center">
+<span class="block text-[10px] font-mono text-white/20">WED</span>
+<span class="text-lg font-headline text-white/60">14</span>
+</div>
+<div class="p-3">
+<div class="bg-white/5 backdrop-blur-md border-l-2 border-tertiary p-3 rounded-lg opacity-60">
+<span class="text-[9px] font-mono text-tertiary mb-1 block">11:00</span>
+<h4 class="text-xs font-bold text-white">Drift Calibration</h4>
+</div>
+</div>
+</div>
+<!-- Thu -->
+<div class="relative group/col">
+<div class="absolute inset-0 bg-surface-container-low/30 rounded-xl -z-10"></div>
+<div class="p-4 border-b border-white/5 text-center">
+<span class="block text-[10px] font-mono text-white/20">THU</span>
+<span class="text-lg font-headline text-white/60">15</span>
+</div>
+<!-- Temporal Bridge Start -->
+<div class="p-3">
+<div class="bg-white/5 backdrop-blur-md border-l-2 border-primary-container p-3 rounded-lg relative z-10">
+<span class="text-[9px] font-mono text-primary-container mb-1 block">08:00</span>
+<h4 class="text-xs font-bold text-white">Quantum Sprint</h4>
+<div class="temporal-bridge absolute -right-[150%] top-1/2 w-[160%] -z-10"></div>
+</div>
+</div>
+</div>
+<!-- Fri -->
+<div class="relative group/col">
+<div class="absolute inset-0 bg-surface-container-low/30 rounded-xl -z-10"></div>
+<div class="p-4 border-b border-white/5 text-center">
+<span class="block text-[10px] font-mono text-white/20">FRI</span>
+<span class="text-lg font-headline text-white/60">16</span>
+</div>
+<div class="p-3">
+<div class="bg-white/5 backdrop-blur-md border-l-2 border-primary-container p-3 rounded-lg mt-12">
+<h4 class="text-xs font-bold text-white">Sprint Finale</h4>
+</div>
+</div>
+</div>
+<!-- Sat -->
+<div class="relative group/col">
+<div class="absolute inset-0 bg-surface-container-low/10 rounded-xl -z-10"></div>
+<div class="p-4 border-b border-white/5 text-center">
+<span class="block text-[10px] font-mono text-white/10">SAT</span>
+<span class="text-lg font-headline text-white/30">17</span>
+</div>
+</div>
+<!-- Sun -->
+<div class="relative group/col">
+<div class="absolute inset-0 bg-surface-container-low/10 rounded-xl -z-10"></div>
+<div class="p-4 border-b border-white/5 text-center">
+<span class="block text-[10px] font-mono text-white/10">SUN</span>
+<span class="text-lg font-headline text-white/30">18</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Detail Panel (Status Hub) -->
+<aside class="fixed right-0 top-20 bottom-0 w-80 bg-[#131315] border-l border-[#D0BCFF]/5 p-8 flex flex-col gap-8 shadow-[-20px_0_80px_rgba(0,0,0,0.5)] z-40">
+<div>
+<h3 class="text-xs font-mono text-[#00E3FD] mb-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+                    AI ADVISORY
+                </h3>
+<div class="bg-surface-container-low p-5 rounded-xl border border-white/5 relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-secondary-container/5 blur-3xl group-hover:bg-secondary-container/10 transition-colors"></div>
+<p class="text-sm leading-relaxed text-white/80">
+                        "Your cognitive load is peaking between <span class="text-secondary font-mono">14:00 - 16:00</span>. Consider rescheduling the 'Drift Calibration' to tomorrow's focus window."
+                    </p>
+<button class="mt-4 text-[10px] font-bold text-secondary uppercase tracking-widest hover:text-white transition-colors">Apply Optimization</button>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-xs font-mono text-white/30 uppercase tracking-widest">Energy Vectors</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-xs font-headline text-white/60">Creative Engine</span>
+<span class="text-xs font-mono text-primary-container">82%</span>
+</div>
+<div class="h-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full w-[82%] bg-gradient-to-r from-primary-container to-[#FFABF3]"></div>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-xs font-headline text-white/60">Logic Processing</span>
+<span class="text-xs font-mono text-secondary">45%</span>
+</div>
+<div class="h-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full w-[45%] bg-gradient-to-r from-secondary-container to-on-secondary-container"></div>
+</div>
+</div>
+</div>
+<div class="mt-auto">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-full border border-white/5 p-1">
+<img alt="User Avatar with Status Glow" class="w-full h-full rounded-full object-cover" data-alt="Cyberpunk character portrait with subtle facial implants, cool blue accent lighting, cinematic bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM5TbFxY-U3z5381xmxWvyO0TtXqdjBnX9nNngzyVRBOeZhCwjTSOC9UkBs35EUOLsLZ716rJddayxXOarVJn1BM4AKJblKjHEV6HGwQxz0iJzqY8pLGuqzRrPsWO7ei7WJUm80-iCJSkbB9bUfPM7rz2vHZqoY1AXQxunCGAzUGA0KJCQgRmDrmKBD5P0A76maLc5gmftlrqJOtaOTRO_PP6MPbst6o6hHuJUw1jil6cZVZyF1P84nKdbXxo9PEjTYf5b-mc6fRw"/>
+</div>
+<div>
+<p class="text-sm font-headline font-bold text-white">Temporal Architect</p>
+<p class="text-[10px] font-mono text-white/40">LEVEL 84 COMMANDER</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-white/5 p-3 rounded-lg text-center hover:bg-white/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm text-primary-container block mb-1">bolt</span>
+<span class="text-[9px] font-mono text-white/60">POWER UP</span>
+</div>
+<div class="bg-white/5 p-3 rounded-lg text-center hover:bg-white/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm text-secondary block mb-1">auto_awesome</span>
+<span class="text-[9px] font-mono text-white/60">DEEP SCAN</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<!-- Floating Action Element (Contextual) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary-container text-on-primary-fixed-variant rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(208,188,255,0.4)] hover:scale-110 active:scale-90 transition-all z-50">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</body></html>

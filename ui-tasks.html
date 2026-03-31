@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TimeFlow | Temporal Architect Focus</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .hyper-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px);
+            border-top: 0.5px solid rgba(208, 188, 255, 0.2);
+            border-left: 0.5px solid rgba(208, 188, 255, 0.2);
+        }
+        .dual-light-edge {
+            border-top: 0.5px solid rgba(208, 188, 255, 0.2);
+            border-left: 0.5px solid rgba(208, 188, 255, 0.2);
+            border-bottom: 0.5px solid rgba(32, 31, 34, 0.4);
+            border-right: 0.5px solid rgba(32, 31, 34, 0.4);
+        }
+        .grain-texture {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3ExternalLink %3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+        }
+        .priority-loop-container {
+            mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#201f22",
+                        "on-primary-fixed-variant": "#4d3d76",
+                        "surface-container-high": "#2a2a2c",
+                        "tertiary-container": "#ffaaf3",
+                        "on-primary-container": "#594983",
+                        "background": "#131315",
+                        "tertiary-fixed-dim": "#ffabf3",
+                        "primary-container": "#d0bcff",
+                        "on-surface-variant": "#cac4d0",
+                        "on-tertiary-fixed": "#380038",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "on-primary-fixed": "#210f48",
+                        "surface-container-lowest": "#0e0e10",
+                        "on-tertiary-fixed-variant": "#810081",
+                        "inverse-surface": "#e5e1e4",
+                        "surface-variant": "#353437",
+                        "tertiary": "#ffd6f5",
+                        "primary": "#e9ddff",
+                        "on-secondary-fixed": "#001f24",
+                        "on-secondary": "#00363d",
+                        "on-secondary-container": "#00616d",
+                        "on-surface": "#e5e1e4",
+                        "surface": "#131315",
+                        "secondary": "#bef4ff",
+                        "on-primary": "#37265e",
+                        "outline-variant": "#49454f",
+                        "surface-container-low": "#1c1b1d",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed-dim": "#d0bcff",
+                        "secondary-fixed-dim": "#00daf3",
+                        "error-container": "#93000a",
+                        "secondary-fixed": "#9cefff",
+                        "surface-tint": "#d0bcff",
+                        "secondary-container": "#01e3fd",
+                        "tertiary-fixed": "#ffd7f5",
+                        "on-background": "#e5e1e4",
+                        "surface-container-highest": "#353437",
+                        "on-tertiary": "#5b005b",
+                        "primary-fixed": "#e9ddff",
+                        "on-tertiary-container": "#940094",
+                        "outline": "#948f9a",
+                        "inverse-primary": "#665590",
+                        "surface-dim": "#131315",
+                        "inverse-on-surface": "#313032",
+                        "surface-bright": "#39393b",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 overflow-x-hidden">
+<!-- Layered Mesh Gradients -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px]"></div>
+<div class="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-secondary-container/5 blur-[150px]"></div>
+<div class="absolute top-[20%] right-[10%] w-[30%] h-[40%] rounded-full bg-tertiary/5 blur-[100px]"></div>
+<div class="grain-texture absolute inset-0"></div>
+</div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131315]/40 backdrop-blur-3xl shadow-[0_0_60px_-15px_rgba(208,188,255,0.05)]">
+<div class="flex justify-between items-center px-8 h-20 w-full">
+<div class="flex items-center gap-6">
+<span class="font-['Space_Grotesk'] font-bold text-[#D0BCFF] text-xl tracking-tight">TimeFlow</span>
+<nav class="hidden md:flex items-center gap-8 ml-8">
+<a class="text-white/60 font-['Inter'] hover:text-[#00E3FD] hover:bg-white/5 transition-all duration-300 px-3 py-1 rounded-md" href="#">Day</a>
+<a class="text-white/60 font-['Inter'] hover:text-[#00E3FD] hover:bg-white/5 transition-all duration-300 px-3 py-1 rounded-md" href="#">Week</a>
+<a class="text-white/60 font-['Inter'] hover:text-[#00E3FD] hover:bg-white/5 transition-all duration-300 px-3 py-1 rounded-md" href="#">Month</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/10">
+<span class="material-symbols-outlined text-sm mr-2 text-[#00E3FD]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-white/80" placeholder="Search focus..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-[#D0BCFF] hover:scale-110 active:scale-95 transition-transform">settings_input_antenna</button>
+<div class="w-10 h-10 rounded-full border border-[#D0BCFF]/20 overflow-hidden shadow-[0_0_15px_rgba(208,188,255,0.2)]">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="Abstract geometric avatar with glowing purple and cyan accents on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbGUbbfSNxOUgOttf1xatc50VGZUxRxip29lVktkwePeAWjF1qvl5YMFgrrcR3P_i5UaMY5nZ3OsjcaIvi9Khc_LCf1MT2uYIEHb1UkvzNbS-WIF79EbzDsb3E7dGew9D_u5SlLLSr0oiUbk-CF4S6nmda5PeN124Y8bocOn_Vm1T-JT1E7l_viUHh-eYOzMWGKZs7oMw2k0Sx_Jjrq9Hf5Y-q_fd2pQT4-r5yxbUw-dkIIW91FjS0p6M5dz58PgbBWFzz7I0Y_pc"/>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-[#D0BCFF]/10 via-transparent to-[#00E3FD]/10 h-[0.5px]"></div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 z-40 overflow-hidden bg-[#131315] border-r border-[#D0BCFF]/5 w-20 hover:w-64 transition-all duration-500 ease-[spring(300,20)] group shadow-[20px_0_80px_rgba(0,0,0,0.5)]">
+<div class="px-6 mb-12 flex items-center gap-4">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center shadow-[0_0_15px_rgba(208,188,255,0.4)]">
+<span class="material-symbols-outlined text-on-primary-fixed text-lg" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<p class="font-headline font-black text-[#D0BCFF] text-lg leading-none">Architect</p>
+<p class="text-[10px] text-white/40 uppercase tracking-widest mt-1">Active State</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-4">
+<div class="flex items-center gap-4 p-3 text-white/40 hover:text-white/80 cursor-pointer hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-headline text-sm opacity-0 group-hover:opacity-100 whitespace-nowrap">Calendar</span>
+</div>
+<div class="flex items-center gap-4 p-3 text-white/40 hover:text-white/80 cursor-pointer hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-headline text-sm opacity-0 group-hover:opacity-100 whitespace-nowrap">Tasks</span>
+</div>
+<div class="flex items-center gap-4 p-3 text-white/40 hover:text-white/80 cursor-pointer hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-headline text-sm opacity-0 group-hover:opacity-100 whitespace-nowrap">Analytics</span>
+</div>
+<div class="flex items-center gap-4 p-3 bg-[#D0BCFF]/10 text-[#D0BCFF] rounded-lg shadow-[0_0_15px_rgba(208,188,255,0.2)] cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">center_focus_strong</span>
+<span class="font-headline text-sm opacity-0 group-hover:opacity-100 whitespace-nowrap">Focus</span>
+</div>
+<div class="flex items-center gap-4 p-3 text-white/40 hover:text-white/80 cursor-pointer hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-headline text-sm opacity-0 group-hover:opacity-100 whitespace-nowrap">Settings</span>
+</div>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full flex items-center justify-center gap-2 bg-primary-container text-on-primary-fixed py-3 rounded-lg font-medium shadow-[0_0_20px_rgba(208,188,255,0.3)] hover:scale-105 active:scale-95 transition-transform overflow-hidden">
+<span class="material-symbols-outlined text-xl">add</span>
+<span class="opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">New Event</span>
+</button>
+<div class="mt-8 pt-8 border-t border-white/5 flex items-center gap-4 p-3 text-white/40 hover:text-white/80 cursor-pointer transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-headline text-sm opacity-0 group-hover:opacity-100">Support</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-20 pt-32 pb-20 px-12 min-h-screen relative z-10">
+<!-- Hero Section / Focus Header -->
+<div class="max-w-6xl mx-auto mb-16 flex justify-between items-end">
+<div>
+<h1 class="font-headline text-5xl font-bold tracking-tighter text-white mb-2">Deep Focus Mode</h1>
+<p class="text-white/60 font-body flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+                    Synthesizing context for <span class="text-secondary-container font-medium">Quantum Framework Launch</span>
+</p>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-white/40 font-mono text-xs uppercase tracking-widest">Zen Mode</span>
+<button class="w-12 h-6 rounded-full bg-surface-container-high border border-white/10 relative p-1 flex items-center group">
+<div class="w-4 h-4 rounded-full bg-primary-container shadow-[0_0_10px_rgba(208,188,255,0.5)] transition-transform group-hover:translate-x-6"></div>
+</button>
+</div>
+</div>
+<!-- Priority Loop (The Central Feature) -->
+<section class="max-w-6xl mx-auto mb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left: Stats/Meta -->
+<div class="lg:col-span-3 space-y-8">
+<div class="p-6 rounded-xl hyper-glass dual-light-edge">
+<p class="text-white/40 text-xs font-mono mb-1 uppercase">Temporal Load</p>
+<p class="text-3xl font-headline font-bold text-primary">84<span class="text-sm font-normal text-white/40 ml-1">%</span></p>
+<div class="w-full bg-white/5 h-1 rounded-full mt-4 overflow-hidden">
+<div class="bg-primary w-[84%] h-full shadow-[0_0_10px_rgba(208,188,255,0.8)]"></div>
+</div>
+</div>
+<div class="p-6 rounded-xl hyper-glass dual-light-edge">
+<p class="text-white/40 text-xs font-mono mb-1 uppercase">Flow State</p>
+<p class="text-3xl font-headline font-bold text-secondary-container">1h 42m</p>
+<div class="flex gap-1 mt-4">
+<div class="h-4 w-1 bg-secondary-container rounded-full opacity-20"></div>
+<div class="h-6 w-1 bg-secondary-container rounded-full opacity-40"></div>
+<div class="h-8 w-1 bg-secondary-container rounded-full opacity-60"></div>
+<div class="h-10 w-1 bg-secondary-container rounded-full shadow-[0_0_10px_rgba(1,227,253,0.5)]"></div>
+<div class="h-5 w-1 bg-secondary-container rounded-full opacity-30"></div>
+</div>
+</div>
+</div>
+<!-- Center: Priority Loop -->
+<div class="lg:col-span-6 relative flex justify-center items-center h-[500px]">
+<!-- Circular Path Visual -->
+<div class="absolute inset-0 rounded-full border border-dashed border-white/5 animate-[spin_60s_linear_infinite]"></div>
+<div class="absolute w-[80%] h-[80%] rounded-full border border-primary/5 animate-[spin_40s_linear_infinite_reverse]"></div>
+<!-- Center Glow -->
+<div class="absolute w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+<!-- Circular Tasks (Simulated Loop) -->
+<div class="relative w-full h-full flex items-center justify-center">
+<!-- Top Task (Active) -->
+<div class="absolute -top-4 w-72 p-5 hyper-glass dual-light-edge rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] hover:scale-105 transition-all group cursor-grab active:cursor-grabbing border-primary/40">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-mono text-primary px-2 py-0.5 bg-primary/10 rounded-full border border-primary/20">PRIORITY 01</span>
+<span class="text-[10px] font-mono text-white/40">14:30 REM</span>
+</div>
+<h3 class="font-headline font-bold text-lg text-white mb-3">Initialize Neural Interface</h3>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img alt="Team member" class="w-6 h-6 rounded-full border border-background" data-alt="Stylized modern 3D avatar of a team member with high-tech apparel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCd1Gg4B_yJssRFFv4WNATsBuIBCCqma-6qmClPbou3Weu2s45YyVRlB73YawpIw5d2wLgRjEw-W2s4wBvjoJ2WFj1KyNOboKJNCs8JGIzndQORnSMnmCFUf49RVQXcZWHfhLTJj5UYFkdDOWRw1Mky-cQclRY48GKaSW7B6pYm0CMiTBAgfszxTh6-IpIhy7CnSdKfz3qVAHY52R1BF1mLrcXnNZHCbJVzZthZwQJ-DLFIRY2OlNBe6LnZcbUnwvNWXmmiZZSedk"/>
+<img alt="Team member" class="w-6 h-6 rounded-full border border-background" data-alt="Digital artist avatar with purple lighting and neon accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeRsJH_HG9sefdKHh4zc_2Xb9s0pCK_QemZpkhyikLaj22p2AzJnmoDcyKrM-efoetLtOzHEpWFl6st5htNQ-gontDveiYIhfwxEQnR-26t0MicHu32X9qyImm8b-SuGkxnYnf3GWD6T0b87JuwPjZtcQryAFMGWtxwsKHD5t06idmZ7ICQ45lDIqOVDKjkCjBAlfUa0nb1bcAnQ5vDBNbEbFrnMXIdt4myr-so-2nmpqbbpegDPTg4Yey0ITA5UfwF04uFY_7c98"/>
+</div>
+<button class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/40 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary text-sm">check</span>
+</button>
+</div>
+</div>
+<!-- Right Task -->
+<div class="absolute right-[-20px] top-[40%] w-64 p-4 hyper-glass dual-light-edge rounded-xl opacity-60 hover:opacity-100 hover:scale-105 transition-all group cursor-grab">
+<p class="text-[10px] font-mono text-white/40 mb-2">PRIORITY 02</p>
+<h3 class="font-headline font-semibold text-md text-white/90">Review Core Logic</h3>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-xs font-mono text-secondary-container">25m est</span>
+<span class="material-symbols-outlined text-white/20 text-sm">more_vert</span>
+</div>
+</div>
+<!-- Left Task -->
+<div class="absolute left-[-20px] top-[40%] w-64 p-4 hyper-glass dual-light-edge rounded-xl opacity-60 hover:opacity-100 hover:scale-105 transition-all group cursor-grab">
+<p class="text-[10px] font-mono text-white/40 mb-2">PRIORITY 03</p>
+<h3 class="font-headline font-semibold text-md text-white/90">Sync Global State</h3>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-xs font-mono text-tertiary">Urgent</span>
+<span class="material-symbols-outlined text-white/20 text-sm">more_vert</span>
+</div>
+</div>
+<!-- Bottom Task (Faded/Upcoming) -->
+<div class="absolute -bottom-4 w-60 p-3 hyper-glass dual-light-edge rounded-xl opacity-30 hover:opacity-60 transition-all text-center">
+<p class="text-[10px] font-mono text-white/20 mb-1">UPCOMING</p>
+<p class="text-sm font-headline text-white/40">Temporal Audit</p>
+</div>
+</div>
+</div>
+<!-- Right: AI Directives -->
+<div class="lg:col-span-3 space-y-6">
+<div class="p-6 rounded-xl bg-secondary-container/5 border border-secondary-container/20 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-secondary-container">psychology</span>
+</div>
+<p class="text-secondary-container text-xs font-mono mb-3 uppercase tracking-wider">AI Suggestion</p>
+<p class="text-white/80 font-body text-sm leading-relaxed mb-4">
+                        Based on your current cognitive load, shifting "Core Logic" to 16:00 will maximize flow efficiency.
+                    </p>
+<button class="w-full py-2 bg-secondary-container/10 border border-secondary-container/40 rounded-md text-secondary-container text-xs font-bold uppercase hover:bg-secondary-container hover:text-on-secondary-container transition-all">Optimize Schedule</button>
+</div>
+<div class="flex items-center gap-4 p-4 hyper-glass dual-light-edge rounded-xl">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<p class="text-xs text-white/40 font-mono">STREAK</p>
+<p class="text-lg font-headline font-bold text-white">12 Cycles</p>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Context: Below Tasks -->
+<section class="max-w-6xl mx-auto">
+<div class="flex items-center gap-4 mb-8">
+<h2 class="font-headline text-2xl font-bold text-white">Focus Context</h2>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+<span class="text-white/40 font-mono text-[10px] uppercase">Synced 2m ago</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Context Card 1: Document -->
+<div class="p-6 hyper-glass dual-light-edge rounded-2xl group hover:translate-y-[-4px] transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<h4 class="font-headline font-bold text-white mb-2">Quantum Specs.v2</h4>
+<p class="text-white/40 text-xs font-body mb-6 line-clamp-2">Technical requirements for the new temporal synchronization engine...</p>
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-mono text-white/30 uppercase tracking-tighter">DOC • 2.4MB</span>
+<span class="material-symbols-outlined text-white/20 group-hover:text-primary transition-colors">arrow_forward</span>
+</div>
+</div>
+<!-- Context Card 2: Meeting -->
+<div class="p-6 hyper-glass dual-light-edge rounded-2xl group hover:translate-y-[-4px] transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 group-hover:bg-secondary-container/20 transition-colors">
+<span class="material-symbols-outlined text-secondary-container">video_camera_front</span>
+</div>
+<h4 class="font-headline font-bold text-white mb-2">Sprint Alignment</h4>
+<p class="text-white/40 text-xs font-body mb-6 line-clamp-2">Recorded session highlighting critical path blockers for Q4...</p>
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-mono text-white/30 uppercase tracking-tighter">REPLAY • 14:02</span>
+<span class="material-symbols-outlined text-white/20 group-hover:text-secondary-container transition-colors">play_circle</span>
+</div>
+</div>
+<!-- Context Card 3: Code Repo -->
+<div class="p-6 hyper-glass dual-light-edge rounded-2xl group hover:translate-y-[-4px] transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 group-hover:bg-tertiary/20 transition-colors">
+<span class="material-symbols-outlined text-tertiary">code</span>
+</div>
+<h4 class="font-headline font-bold text-white mb-2">Temporal_SDK_Main</h4>
+<p class="text-white/40 text-xs font-body mb-6 line-clamp-2">3 Pending pull requests related to focus task #01...</p>
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-mono text-white/30 uppercase tracking-tighter">GIT • 3 ALERTS</span>
+<span class="material-symbols-outlined text-white/20 group-hover:text-tertiary transition-colors">terminal</span>
+</div>
+</div>
+<!-- Context Card 4: AI Research -->
+<div class="p-6 bg-gradient-to-br from-primary/10 to-secondary-container/10 border border-white/10 rounded-2xl group hover:translate-y-[-4px] transition-all cursor-pointer relative overflow-hidden">
+<div class="absolute inset-0 grain-texture"></div>
+<div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6 relative z-10">
+<span class="material-symbols-outlined text-white">auto_awesome</span>
+</div>
+<h4 class="font-headline font-bold text-white mb-2 relative z-10">Insight Stream</h4>
+<p class="text-white/60 text-xs font-body mb-6 line-clamp-2 relative z-10">Live AI aggregation of competitor temporal strategies...</p>
+<div class="flex items-center justify-between relative z-10">
+<span class="text-[10px] font-mono text-white/50 uppercase tracking-tighter">LIVE FEED</span>
+<div class="flex gap-1">
+<span class="w-1 h-1 rounded-full bg-white animate-bounce"></span>
+<span class="w-1 h-1 rounded-full bg-white animate-bounce [animation-delay:0.2s]"></span>
+<span class="w-1 h-1 rounded-full bg-white animate-bounce [animation-delay:0.4s]"></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating UI elements -->
+<div class="fixed bottom-8 right-8 flex flex-col gap-4 z-50">
+<button class="w-14 h-14 rounded-full bg-white/5 hyper-glass dual-light-edge flex items-center justify-center text-white/60 hover:text-primary hover:border-primary/40 transition-all hover:scale-110 shadow-2xl">
+<span class="material-symbols-outlined">message</span>
+</button>
+<button class="w-14 h-14 rounded-full bg-primary-container text-on-primary-fixed flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-[0_0_30px_rgba(208,188,255,0.4)]">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</div>
+</body></html>
