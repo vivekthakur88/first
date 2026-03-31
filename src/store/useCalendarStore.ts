@@ -52,7 +52,7 @@ interface CalendarState {
   setSearchQuery: (query: string) => void;
 }
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = '/api'; // Use relative URL for deployment flexibility
 
 export const useCalendarStore = create<CalendarState>()(
   persist(

@@ -31,6 +31,10 @@ db.exec(`
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the Vite build directory
+app.use(express.static(path.join(__dirname, '../dist')));
+
+
 // Routes
 // Get all events
 app.get('/api/events', (req, res) => {
@@ -104,6 +108,11 @@ app.delete('/api/events/:id', (req, res) => {
   const { id } = req.params;
   db.prepare('DELETE FROM events WHERE id = ?').run(id);
   res.json({ message: 'Event deleted' });
+});
+
+// Wildcard route to serve index.html for all non-API paths (for React Router)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.listen(port, () => {
