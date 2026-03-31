@@ -7,10 +7,10 @@
     "dev:ui": "vite",
     "dev:server": "cd server && npm run dev",
     "dev": "concurrently \"npm run dev:ui\" \"npm run dev:server\"",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "render-build": "npm install && npm run build && cd server && npm install"
+    "render-build": "npm install --include=dev && vite build && cd server && npm install"
   },
   "dependencies": {
     "clsx": "^2.1.1",
