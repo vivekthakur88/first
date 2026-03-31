@@ -3,7 +3,6 @@ import { persist } from 'zustand/middleware';
 import { addMonths, addWeeks, subDays, addDays, subMonths, subWeeks } from 'date-fns';
 
 export type EventPriority = 'high' | 'medium' | 'low';
-// Added tasks and focus to view types
 export type ViewType = 'month' | 'week' | 'day' | 'tasks' | 'focus';
 
 export interface CalendarEvent {
@@ -28,8 +27,11 @@ interface CalendarState {
   selectedEvent: CalendarEvent | null;
   isEventModalOpen: boolean;
   searchQuery: string;
+  isLoading: boolean;
+  error: string | null;
 
   // Actions
+  fetchEvents: () => Promise<void>;
   setCurrentDate: (date: Date) => void;
   nextPeriod: () => void;
   prevPeriod: () => void;
@@ -38,9 +40,9 @@ interface CalendarState {
   toggleDarkMode: () => void;
   
   // Event Actions
-  addEvent: (event: Omit<CalendarEvent, 'id'>) => void;
-  updateEvent: (id: string, event: Partial<CalendarEvent>) => void;
-  deleteEvent: (id: string) => void;
+  addEvent: (event: Omit<CalendarEvent, 'id'>) => Promise<void>;
+  updateEvent: (id: string, event: Partial<CalendarEvent>) => Promise<void>;
+  deleteEvent: (id: string) => Promise<void>;
   
   // Modal State Actions
   openEventModal: (event?: CalendarEvent | null) => void;
@@ -50,31 +52,32 @@ interface CalendarState {
   setSearchQuery: (query: string) => void;
 }
 
-const mockEvents: CalendarEvent[] = [
-  {
-    id: '1',
-    title: 'Synaptic Sync',
-    description: 'Deep Architecture Review.',
-    location: 'Aether Hub',
-    startTime: new Date(new Date().setHours(10, 0, 0, 0)).toISOString(),
-    endTime: new Date(new Date().setHours(11, 0, 0, 0)).toISOString(),
-    tags: ['work', 'meeting'],
-    color: '#d0bcff', // primary-container
-    priority: 'high',
-    isTask: false,
-  },
-];
+const API_URL = 'http://localhost:3001/api';
 
 export const useCalendarStore = create<CalendarState>()(
   persist(
-    (set, _get) => ({
+    (set, get) => ({
       currentDate: new Date().toISOString(),
-      view: 'focus', // Made Neural Task Hub the default view
-      events: mockEvents,
+      view: 'focus',
+      events: [],
       isDarkMode: false,
       selectedEvent: null,
       isEventModalOpen: false,
       searchQuery: '',
+      isLoading: false,
+      error: null,
+
+      fetchEvents: async () => {
+        set({ isLoading: true, error: null });
+        try {
+          const response = await fetch(`${API_URL}/events`);
+          if (!response.ok) throw new Error('Failed to fetch events');
+          const data = await response.json();
+          set({ events: data, isLoading: false });
+        } catch (error: any) {
+          set({ error: error.message, isLoading: false });
+        }
+      },
 
       setCurrentDate: (date) => set({ currentDate: date.toISOString() }),
       
@@ -105,17 +108,59 @@ export const useCalendarStore = create<CalendarState>()(
         return { isDarkMode: newMode };
       }),
 
-      addEvent: (event) => set((state) => ({
-        events: [...state.events, { ...event, id: crypto.randomUUID() }]
-      })),
+      addEvent: async (event) => {
+        const newEvent = { ...event, id: crypto.randomUUID() };
+        try {
+          const response = await fetch(`${API_URL}/events`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newEvent)
+          });
+          if (!response.ok) throw new Error('Failed to add event');
+          // Update local state after success
+          set((state) => ({ events: [...state.events, newEvent] }));
+        } catch (error: any) {
+          set({ error: error.message });
+        }
+      },
 
-      updateEvent: (id, updatedEvent) => set((state) => ({
-        events: state.events.map(ev => ev.id === id ? { ...ev, ...updatedEvent } : ev)
-      })),
+      updateEvent: async (id, updatedFields) => {
+        const state = get();
+        const existingEvent = state.events.find(ev => ev.id === id);
+        if (!existingEvent) return;
 
-      deleteEvent: (id) => set((state) => ({
-        events: state.events.filter(ev => ev.id !== id)
-      })),
+        const updatedEvent = { ...existingEvent, ...updatedFields };
+
+        try {
+          const response = await fetch(`${API_URL}/events/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedEvent)
+          });
+          if (!response.ok) throw new Error('Failed to update event');
+          // Update local state after success
+          set((state) => ({
+            events: state.events.map(ev => ev.id === id ? updatedEvent : ev)
+          }));
+        } catch (error: any) {
+          set({ error: error.message });
+        }
+      },
+
+      deleteEvent: async (id) => {
+        try {
+          const response = await fetch(`${API_URL}/events/${id}`, {
+            method: 'DELETE'
+          });
+          if (!response.ok) throw new Error('Failed to delete event');
+          // Update local state after success
+          set((state) => ({
+            events: state.events.filter(ev => ev.id !== id)
+          }));
+        } catch (error: any) {
+          set({ error: error.message });
+        }
+      },
 
       openEventModal: (event = null) => set({ selectedEvent: event, isEventModalOpen: true }),
       
@@ -124,12 +169,11 @@ export const useCalendarStore = create<CalendarState>()(
       setSearchQuery: (query) => set({ searchQuery: query }),
     }),
     {
-      name: 'calendar-storage', // name of item in the storage (must be unique)
+      name: 'calendar-storage',
       partialize: (state) => ({ 
-        events: state.events, 
         isDarkMode: state.isDarkMode, 
         view: state.view 
-      }), // only persist these fields
+      }), // only persist UI state, not events which are now in backend
       onRehydrateStorage: () => (state) => {
         if (state && typeof window !== 'undefined') {
           if (state.isDarkMode) document.documentElement.classList.add('dark');

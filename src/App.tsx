@@ -4,8 +4,14 @@ import { useCalendarStore } from './store/useCalendarStore';
 import { MonthView } from './components/calendar/MonthView';
 import { NeuralTaskHub } from './components/tasks/NeuralTaskHub';
 
+import { useEffect } from 'react';
+
 function App() {
-  const { view } = useCalendarStore();
+  const { view, fetchEvents } = useCalendarStore();
+  
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
   
   return (
     <AppLayout>
