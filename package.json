@@ -10,7 +10,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "render-build": "npm install --include=dev && vite build && cd server && npm install"
+    "render-build": "npm install --include=dev && vite build",
+    "start": "node server/index.js"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -20,7 +21,11 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tailwind-merge": "^3.5.0",
-    "zustand": "^5.0.12"
+    "zustand": "^5.0.12",
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
